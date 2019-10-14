@@ -1,0 +1,68 @@
+{
+  "name": "jotform-fake-submission",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@material-ui/core": "^4.5.0",
+    "@material-ui/icons": "^4.4.3",
+    "@material-ui/lab": "^4.0.0-alpha.28",
+    "@uiw/react-monacoeditor": "^2.0.1",
+    "brace": "^0.11.1",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-plugin-prettier": "^3.1.1",
+    "faker": "^4.1.0",
+    "jotform": "^0.1.4",
+    "jsoneditor-react": "^1.0.1",
+    "lodash": "^4.17.15",
+    "materialize-css": "^1.0.0",
+    "monaco-editor-webpack-plugin": "^1.7.0",
+    "prop-types": "^15.7.2",
+    "react": "^16.10.2",
+    "react-dom": "^16.10.2",
+    "react-materialize": "^3.4.1",
+    "react-monaco-editor": "^0.31.0",
+    "react-scripts": "3.2.0",
+    "react-select": "^3.0.8",
+    "react-toast-notifications": "^2.2.5",
+    "react-toastify": "^5.4.0",
+    "reactjs-popup": "^1.5.0",
+    "styled-components": "^4.4.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
+  "main": "index.js",
+  "devDependencies": {
+    "eslint": "^6.5.1",
+    "eslint-config-airbnb-base": "14.0.0",
+    "eslint-config-prettier": "^6.4.0",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-node": "^10.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "prettier-eslint": "^9.0.0"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
