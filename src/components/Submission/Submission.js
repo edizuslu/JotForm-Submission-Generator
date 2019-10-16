@@ -13,7 +13,6 @@ import { ToastContainer, toast } from "react-toastify";
 import CopyIcon from "@material-ui/icons/FileCopy";
 import Fab from "@material-ui/core/Fab";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-
 import Checkbox from "@material-ui/core/Checkbox";
 import PropTypes from "prop-types";
 

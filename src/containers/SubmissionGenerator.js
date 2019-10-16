@@ -1,9 +1,9 @@
+/* eslint-disable react/forbid-prop-types */
 /* eslint-disable react/jsx-filename-extension */
 /* eslint-disable no-restricted-syntax */
 import React, { Component } from "react";
 import "./App.css";
 import "jsoneditor-react/es/editor.min.css";
-import jf from "jotform";
 import PropTypes from "prop-types";
 import Menu from "../components/Menu/Menu";
 import Submission from "../components/Submission/Submission";
@@ -15,16 +15,11 @@ const FakeData = new FakeDataClass();
 class SubmissionGenerator extends Component {
   constructor(props) {
     super(props);
-    const { apiKey, submissionCount, formID } = this.props;
-
-    jf.options({
-      debug: true,
-      apiKey
-    });
+    const { submissionCount, formID, JF } = this.props;
 
     this.state = {
       submissions: [],
-      JF: jf,
+      JF,
       formID,
       submissionCount,
       selectedSubmissions: new Array(submissionCount).fill(false)
@@ -34,6 +29,7 @@ class SubmissionGenerator extends Component {
   componentDidMount() {
     const self = this;
     const { JF, formID, submissionCount } = this.state;
+    const { selectedItems } = this.props;
 
     let username = "";
     JF.getUser().then(function success(r) {
@@ -46,34 +42,23 @@ class SubmissionGenerator extends Component {
       for (let i = 1; i <= submissionCount; i += 1) {
         const submissionID = FakeData.getSubmissionID();
         const submission = {};
-        FakeData.assignSubmissionInfo(submission, submissionID, formID);
         const keys = Object.keys(response);
         for (let index = 0; index < keys.length; index += 1) {
           const attributes = response[keys[index]];
-          for (const atb in attributes) {
-            if (FakeData.isSubmissionAttribute(atb)) {
-              const value = attributes[atb];
-              FakeData.assign(submission, ["answers", keys[index], atb], value);
-            } else if (atb === "sublabels") {
-              const value = attributes[atb];
-              FakeData.assign(
-                submission,
-                ["answers", keys[index], atb],
-                JSON.stringify(value)
-              );
-            }
+          const answerType = attributes.type;
+          if (FakeData.isSelectedType(selectedItems, answerType)) {
+            FakeData.assign(submission, [keys[index], "type"], attributes.type);
+            FakeData.generateAnswer(
+              answerType,
+              submission,
+              keys[index],
+              attributes,
+              formID,
+              username,
+              submissionID,
+              selectedItems
+            );
           }
-          const answerType = submission.answers[keys[index]].type;
-          FakeData.generateAnswer(
-            answerType,
-            submission,
-            "answers",
-            keys[index],
-            attributes,
-            formID,
-            username,
-            submissionID
-          );
         }
         submissionsArray.push(submission);
       }
@@ -93,14 +78,14 @@ class SubmissionGenerator extends Component {
   sendSubmissions = () => {
     const {
       submissionCount,
-      selectedSubmissions,
       submissions,
       formID,
-      JF
+      JF,
+      selectedSubmissions
     } = this.state;
     for (let index = 0; index < submissionCount; index += 1) {
       if (selectedSubmissions[index]) {
-        const fields = submissions[index].answers;
+        const fields = submissions[index];
         const submission = {};
         for (const field in fields) {
           if (Object.prototype.hasOwnProperty.call(fields[field], "answer")) {
@@ -159,9 +144,10 @@ class SubmissionGenerator extends Component {
 }
 
 SubmissionGenerator.propTypes = {
-  apiKey: PropTypes.string.isRequired,
+  JF: PropTypes.object.isRequired,
   formID: PropTypes.string.isRequired,
-  submissionCount: PropTypes.number.isRequired
+  submissionCount: PropTypes.number.isRequired,
+  selectedItems: PropTypes.array.isRequired
 };
 
 export default SubmissionGenerator;
