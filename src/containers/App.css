@@ -20,3 +20,671 @@
 .App-link {
   color: #09d3ac;
 }
+
+.JotformLogin {
+  position: fixed;
+  top: 0;
+  left: 0;
+  max-width: 816px !important;
+  height: 560px;
+  width: 96% !important;
+  height: auto;
+  z-index: 10;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  background-color: #fff;
+  background-image: url(https://cdn.jotfor.ms/assets/img/modals/modal-bg.svg);
+  background-repeat: no-repeat;
+  background-position: bottom center;
+  background-size: 100%;
+  border-radius: 4px;
+  text-align: center;
+  padding: 48px 8px;
+  max-height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.LoginForm {
+  border-bottom-color: rgb(0, 0, 0);
+  border-bottom-style: none;
+  border-bottom-width: 0px;
+  border-image-outset: 0px;
+  border-image-repeat: stretch;
+  border-image-slice: 100%;
+  border-image-source: none;
+  border-image-width: 1;
+  border-left-color: rgb(0, 0, 0);
+  border-left-style: none;
+  border-left-width: 0px;
+  border-right-color: rgb(0, 0, 0);
+  border-right-style: none;
+  border-right-width: 0px;
+  border-top-color: rgb(0, 0, 0);
+  border-top-style: none;
+  border-top-width: 0px;
+  box-shadow: none;
+  box-sizing: border-box;
+  color: rgb(0, 0, 0);
+  display: block;
+  font-family: CircularStd, -apple-system, blinkmacsystemfont, "Segoe UI",
+    roboto, oxygen-sans, ubuntu, cantarell, "Helvetica Neue", sans-serif;
+  height: auto;
+  list-style-image: none;
+  list-style-position: outside;
+  list-style-type: none;
+  margin-bottom: 0px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0px;
+  max-width: 240px;
+  padding-bottom: 0px;
+  padding-left: 0px;
+  padding-right: 0px;
+  padding-top: 0px;
+  text-align: center;
+  text-rendering: optimizelegibility;
+  text-size-adjust: 100%;
+  width: 100%;
+  -webkit-text-fill-color: rgb(0, 0, 0);
+}
+
+.jfHeader-authFormLine form-list-element {
+  box-sizing: border-box;
+  color: rgb(0, 0, 0);
+  display: block;
+  font-family: CircularStd, -apple-system, blinkmacsystemfont, "Segoe UI",
+    roboto, oxygen-sans, ubuntu, cantarell, "Helvetica Neue", sans-serif;
+  height: 66.4px;
+  list-style-image: none;
+  list-style-position: outside;
+  list-style-type: none;
+  margin-bottom: 12px;
+  text-align: center;
+  text-rendering: optimizelegibility;
+  text-size-adjust: 100%;
+  width: 240px;
+  -webkit-text-fill-color: rgb(0, 0, 0);
+}
+
+.jfHeader-authFormLabel locale {
+  box-sizing: border-box;
+  color: rgb(38, 50, 56);
+  cursor: default;
+  display: block;
+  font-family: CircularStd, -apple-system, blinkmacsystemfont, "Segoe UI",
+    roboto, oxygen-sans, ubuntu, cantarell, "Helvetica Neue", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  height: 18px;
+  line-height: 18px;
+  list-style-image: none;
+  list-style-position: outside;
+  list-style-type: none;
+  margin-bottom: 8px;
+  margin-left: 8px;
+  margin-right: 0px;
+  margin-top: 0px;
+  padding-bottom: 0px;
+  padding-left: 0px;
+  padding-right: 0px;
+  padding-top: 0px;
+  text-align: left;
+  text-rendering: optimizelegibility;
+  text-size-adjust: 100%;
+  width: 232px;
+  -webkit-text-fill-color: rgb(38, 50, 56);
+}
+
+.jfHeader-authFormInput {
+  background-attachment: scroll;
+  background-clip: border-box;
+  background-color: rgb(232, 240, 254);
+  background-image: none;
+  background-origin: padding-box;
+  background-position-x: 0%;
+  background-position-y: 0%;
+  background-size: auto;
+  border-bottom-color: rgb(207, 216, 220);
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-image-outset: 0px;
+  border-image-repeat: stretch;
+  border-image-slice: 100%;
+  border-image-source: none;
+  border-image-width: 1;
+  border-left-color: rgb(207, 216, 220);
+  border-left-style: solid;
+  border-left-width: 1px;
+  border-right-color: rgb(207, 216, 220);
+  border-right-style: solid;
+  border-right-width: 1px;
+  border-top-color: rgb(207, 216, 220);
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  box-shadow: none;
+  box-sizing: border-box;
+  color: rgb(0, 0, 0);
+  cursor: text;
+  display: block;
+  font-family: CircularStd, -apple-system, blinkmacsystemfont, "Segoe UI",
+    roboto, oxygen-sans, ubuntu, cantarell, "Helvetica Neue", sans-serif;
+  font-size: 16px;
+  font-stretch: 100%;
+  font-style: normal;
+  font-variant-caps: normal;
+  font-variant-east-asian: normal;
+  font-variant-ligatures: normal;
+  font-variant-numeric: normal;
+  font-weight: 400;
+  height: 40.4px;
+  letter-spacing: normal;
+  line-height: normal;
+  list-style-image: none;
+  list-style-position: outside;
+  list-style-type: none;
+  margin-bottom: 0px;
+  margin-left: 0px;
+  margin-right: 0px;
+  margin-top: 0px;
+  padding-bottom: 9px;
+  padding-left: 9px;
+  padding-right: 9px;
+  padding-top: 9px;
+  text-align: start;
+  text-indent: 0px;
+  text-rendering: optimizelegibility;
+  text-shadow: none;
+  text-size-adjust: 100%;
+  text-transform: none;
+  transition-delay: 0s;
+  transition-duration: 0.15s;
+  transition-property: background-color;
+  transition-timing-function: ease;
+  width: 304px;
+  word-spacing: 0px;
+  writing-mode: horizontal-tb;
+  -webkit-appearance: none;
+  -webkit-rtl-ordering: logical;
+  -webkit-text-fill-color: rgb(0, 0, 0);
+  -webkit-border-image: none;
+}
+
+.background {
+  background: url(https://cdn.jotfor.ms/assets/img/modals/modal-bg.svg) !important;
+  background-repeat: no-repeat !important;
+  background-position: bottom !important;
+  background-size: contain !important;
+}
+
+.landing-page {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.header2 {
+  box-sizing: border-box;
+  color: rgb(0, 0, 0);
+  display: block;
+  font-family: "PT Sans", sans-serif;
+  font-feature-settings: "lnum";
+  font-size: 16px;
+  font-variant-numeric: lining-nums;
+  height: 55.55px;
+  line-height: 18.4px;
+  outline-color: rgb(0, 0, 0);
+  outline-style: none;
+  outline-width: 0px;
+  text-rendering: optimizelegibility;
+  text-size-adjust: 100%;
+  width: 1488.82px;
+  -webkit-font-smoothing: antialiased;
+}
+
+.content2 {
+  box-sizing: border-box;
+  color: rgb(0, 0, 0);
+  display: flex;
+  font-family: "PT Sans", sans-serif;
+  font-feature-settings: "lnum";
+  font-size: 16px;
+  font-variant-numeric: lining-nums;
+  height: 55.55px;
+  justify-content: space-between;
+  line-height: 18.4px;
+  margin-bottom: 0px;
+  margin-left: 0px;
+  margin-right: 0px;
+  margin-top: 0px;
+  max-width: none;
+  outline-color: rgb(0, 0, 0);
+  outline-style: none;
+  outline-width: 0px;
+  text-rendering: optimizelegibility;
+  text-size-adjust: 100%;
+  transition-delay: 0s;
+  transition-duration: 0.3s;
+  transition-property: padding;
+  transition-timing-function: ease;
+  width: 1488.82px;
+  -webkit-box-pack: justify;
+  -webkit-font-smoothing: antialiased;
+}
+
+.logo2 {
+  box-sizing: border-box;
+  color: rgb(0, 0, 0);
+  display: block;
+  font-family: "PT Sans", sans-serif;
+  font-feature-settings: "lnum";
+  font-size: 16px;
+  font-variant-numeric: lining-nums;
+  height: 39.55px;
+  line-height: 18.4px;
+  margin-bottom: 8px;
+  margin-left: 8px;
+  margin-right: 8px;
+  margin-top: 8px;
+  max-height: 55px;
+  outline-color: rgb(0, 0, 0);
+  outline-style: none;
+  outline-width: 0px;
+  text-rendering: optimizelegibility;
+  text-size-adjust: 100%;
+  width: 164px;
+  -webkit-font-smoothing: antialiased;
+}
+
+.logo-link2 {
+  background-color: rgba(0, 0, 0, 0);
+  box-sizing: border-box;
+  color: rgb(85, 26, 139);
+  cursor: pointer;
+  display: block;
+  font-family: "PT Sans", sans-serif;
+  font-feature-settings: "lnum";
+  font-size: 16px;
+  font-variant-numeric: lining-nums;
+  height: 39.55px;
+  line-height: 18.4px;
+  margin-left: 8px;
+  max-height: 55px;
+  outline-color: rgb(85, 26, 139);
+  outline-style: none;
+  outline-width: 0px;
+  text-decoration-color: rgb(0, 0, 238);
+  text-decoration-line: none;
+  text-decoration-style: solid;
+  text-rendering: optimizelegibility;
+  text-size-adjust: 100%;
+  width: 156px;
+  -webkit-font-smoothing: antialiased;
+}
+
+.logo-white2 {
+  box-sizing: border-box;
+  color: rgb(85, 26, 139);
+  cursor: pointer;
+  display: inline;
+  font-family: "PT Sans", sans-serif;
+  font-feature-settings: "lnum";
+  font-size: 16px;
+  font-variant-numeric: lining-nums;
+  height: 39.55px;
+  line-height: 18.4px;
+  outline-color: rgb(85, 26, 139);
+  outline-style: none;
+  outline-width: 0px;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  text-rendering: optimizelegibility;
+  text-size-adjust: 100%;
+  width: 156px;
+  -webkit-font-smoothing: antialiased;
+}
+
+.menu2 {
+  box-sizing: border-box;
+  color: rgb(255, 255, 255);
+  display: flex;
+  font-family: "PT Sans", sans-serif;
+  font-feature-settings: "lnum";
+  font-size: 16px;
+  font-variant-numeric: lining-nums;
+  height: 55.55px;
+  line-height: 18.4px;
+  outline-color: rgb(255, 255, 255);
+  outline-style: none;
+  outline-width: 0px;
+  text-rendering: optimizelegibility;
+  text-size-adjust: 100%;
+  width: 658.681px;
+  -webkit-font-smoothing: antialiased;
+}
+
+.menuList2 {
+  align-items: center;
+  border-bottom-color: rgb(255, 255, 255);
+  border-bottom-style: none;
+  border-bottom-width: 0px;
+  border-image-outset: 0px;
+  border-image-repeat: stretch;
+  border-image-slice: 100%;
+  border-image-source: none;
+  border-image-width: 1;
+  border-left-color: rgb(255, 255, 255);
+  border-left-style: none;
+  border-left-width: 0px;
+  border-right-color: rgb(255, 255, 255);
+  border-right-style: none;
+  border-right-width: 0px;
+  border-top-color: rgb(255, 255, 255);
+  border-top-style: none;
+  border-top-width: 0px;
+  box-sizing: border-box;
+  color: rgb(255, 255, 255);
+  display: flex;
+  font-family: "PT Sans", sans-serif;
+  font-feature-settings: "lnum";
+  font-size: 16px;
+  font-stretch: 100%;
+  font-style: normal;
+  font-variant-caps: normal;
+  font-variant-east-asian: normal;
+  font-variant-ligatures: normal;
+  font-variant-numeric: lining-nums;
+  font-weight: 400;
+  height: 55.55px;
+  line-height: 18.4px;
+  list-style-image: none;
+  list-style-position: outside;
+  list-style-type: none;
+  margin-block-end: 0px;
+  margin-block-start: 0px;
+  margin-bottom: 0px;
+  margin-inline-end: 0px;
+  margin-inline-start: 0px;
+  margin-left: 0px;
+  margin-right: 0px;
+  margin-top: 0px;
+  outline-color: rgb(255, 255, 255);
+  outline-style: none;
+  outline-width: 0px;
+  padding-bottom: 0px;
+  padding-inline-start: 0px;
+  padding-left: 0px;
+  padding-right: 0px;
+  padding-top: 0px;
+  text-rendering: optimizelegibility;
+  text-size-adjust: 100%;
+  vertical-align: baseline;
+  width: 598.681px;
+  -webkit-box-align: center;
+  -webkit-font-smoothing: antialiased;
+}
+
+.menu-item2 {
+  box-sizing: border-box;
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+  display: none;
+  float: left;
+  font-family: "PT Sans", sans-serif;
+  font-feature-settings: "lnum";
+  font-size: 16px;
+  font-stretch: 100%;
+  font-style: normal;
+  font-variant-caps: normal;
+  font-variant-east-asian: normal;
+  font-variant-ligatures: normal;
+  font-variant-numeric: lining-nums;
+  font-weight: 400;
+  height: auto;
+  line-height: 18.4px;
+  list-style-image: none;
+  list-style-position: outside;
+  list-style-type: none;
+  outline-color: rgb(255, 255, 255);
+  outline-style: none;
+  outline-width: 0px;
+  text-align: left;
+  text-rendering: optimizelegibility;
+  text-size-adjust: 100%;
+  width: auto;
+  -webkit-font-smoothing: antialiased;
+}
+
+.item2 {
+  background-color: rgba(0, 0, 0, 0);
+  box-sizing: border-box;
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+  display: inline-block;
+  font-family: CircularStd, -apple-system, blinkmacsystemfont, "Segoe UI",
+    roboto, oxygen-sans, ubuntu, cantarell, "Helvetica Neue", sans-serif;
+  font-feature-settings: "lnum";
+  font-size: 16px;
+  font-stretch: 100%;
+  font-style: normal;
+  font-variant-caps: normal;
+  font-variant-east-asian: normal;
+  font-variant-ligatures: normal;
+  font-variant-numeric: lining-nums;
+  font-weight: 400;
+  height: auto;
+  line-height: 55px;
+  list-style-image: none;
+  list-style-position: outside;
+  list-style-type: none;
+  outline-color: rgb(255, 255, 255);
+  outline-style: none;
+  outline-width: 0px;
+  padding-bottom: 0px;
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-top: 0px;
+  position: relative;
+  text-align: left;
+  text-decoration-color: rgb(255, 255, 255);
+  text-decoration-line: none;
+  text-decoration-style: solid;
+  text-rendering: optimizelegibility;
+  text-size-adjust: 100%;
+  width: auto;
+  -webkit-font-smoothing: antialiased;
+}
+
+.accountBox2 {
+  align-items: center;
+  box-sizing: border-box;
+  color: rgb(255, 255, 255);
+  display: flex;
+  font-family: "PT Sans", sans-serif;
+  font-feature-settings: "lnum";
+  font-size: 16px;
+  font-variant-numeric: lining-nums;
+  height: 55.55px;
+  line-height: 18.4px;
+  outline-color: rgb(255, 255, 255);
+  outline-style: none;
+  outline-width: 0px;
+  text-rendering: optimizelegibility;
+  text-size-adjust: 100%;
+  width: 60px;
+  -webkit-box-align: center;
+  -webkit-font-smoothing: antialiased;
+}
+
+.account2 {
+  align-items: center;
+  border-bottom-color: rgb(255, 255, 255);
+  border-bottom-style: none;
+  border-bottom-width: 0px;
+  border-image-outset: 0px;
+  border-image-repeat: stretch;
+  border-image-slice: 100%;
+  border-image-source: none;
+  border-image-width: 1;
+  border-left-color: rgb(255, 255, 255);
+  border-left-style: none;
+  border-left-width: 0px;
+  border-right-color: rgb(255, 255, 255);
+  border-right-style: none;
+  border-right-width: 0px;
+  border-top-color: rgb(255, 255, 255);
+  border-top-style: none;
+  border-top-width: 0px;
+  box-sizing: border-box;
+  color: rgb(255, 255, 255);
+  display: block;
+  font-family: "PT Sans", sans-serif;
+  font-feature-settings: "lnum";
+  font-size: 16px;
+  font-stretch: 100%;
+  font-style: normal;
+  font-variant-caps: normal;
+  font-variant-east-asian: normal;
+  font-variant-ligatures: normal;
+  font-variant-numeric: lining-nums;
+  font-weight: 400;
+  height: 51.2px;
+  line-height: 18.4px;
+  list-style-image: none;
+  list-style-position: outside;
+  list-style-type: none;
+  margin-block-end: 0px;
+  margin-block-start: 0px;
+  margin-bottom: 0px;
+  margin-inline-end: 0px;
+  margin-inline-start: 12px;
+  margin-left: 12px;
+  margin-right: 0px;
+  margin-top: 0px;
+  outline-color: rgb(255, 255, 255);
+  outline-style: none;
+  outline-width: 0px;
+  padding-bottom: 0px;
+  padding-inline-start: 0px;
+  padding-left: 0px;
+  padding-right: 0px;
+  padding-top: 0px;
+  text-rendering: optimizelegibility;
+  text-size-adjust: 100%;
+  vertical-align: baseline;
+  width: 48px;
+  -webkit-box-align: center;
+  -webkit-font-smoothing: antialiased;
+}
+
+.avatarAccount2 {
+  box-sizing: border-box;
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+  display: list-item;
+  float: left;
+  font-family: "PT Sans", sans-serif;
+  font-feature-settings: "lnum";
+  font-size: 16px;
+  font-stretch: 100%;
+  font-style: normal;
+  font-variant-caps: normal;
+  font-variant-east-asian: normal;
+  font-variant-ligatures: normal;
+  font-variant-numeric: lining-nums;
+  font-weight: 400;
+  height: 51.2px;
+  line-height: 18.4px;
+  list-style-image: none;
+  list-style-position: outside;
+  list-style-type: none;
+  outline-color: rgb(255, 255, 255);
+  outline-style: none;
+  outline-width: 0px;
+  position: relative;
+  text-align: left;
+  text-rendering: optimizelegibility;
+  text-size-adjust: 100%;
+  width: 48px;
+  -webkit-font-smoothing: antialiased;
+}
+
+.avatar2 {
+  background-color: rgb(246, 246, 246);
+  background-image: url(https://lh3.googleusercontent.com/a-/AAuE7mBO65-3FvWU4I93giF48A5RwAxxLyIporZuO_uKLA=s96-c);
+  background-position-x: 50%;
+  background-position-y: 50%;
+  background-size: cover;
+  border-bottom-color: rgb(249, 142, 3);
+  border-bottom-left-radius: 50%;
+  border-bottom-right-radius: 50%;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-image-outset: 0px;
+  border-image-repeat: stretch;
+  border-image-slice: 100%;
+  border-image-source: none;
+  border-image-width: 1;
+  border-left-color: rgb(249, 142, 3);
+  border-left-style: solid;
+  border-left-width: 2px;
+  border-right-color: rgb(249, 142, 3);
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-top-color: rgb(249, 142, 3);
+  border-top-left-radius: 50%;
+  border-top-right-radius: 50%;
+  border-top-style: solid;
+  border-top-width: 2px;
+  box-sizing: border-box;
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+  display: inline-block;
+  font-family: CircularStd, -apple-system, blinkmacsystemfont, "Segoe UI",
+    roboto, oxygen-sans, ubuntu, cantarell, "Helvetica Neue", sans-serif;
+  font-feature-settings: "lnum";
+  font-size: 16px;
+  font-stretch: 100%;
+  font-style: normal;
+  font-variant-caps: normal;
+  font-variant-east-asian: normal;
+  font-variant-ligatures: normal;
+  font-variant-numeric: lining-nums;
+  font-weight: 400;
+  height: 48px;
+  line-height: 55px;
+  list-style-image: none;
+  list-style-position: outside;
+  list-style-type: none;
+  margin-bottom: 0px;
+  margin-left: 0px;
+  margin-right: 0px;
+  margin-top: 0px;
+  outline-color: rgb(255, 255, 255);
+  outline-style: none;
+  outline-width: 0px;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  padding-bottom: 0px;
+  padding-left: 0px;
+  padding-right: 0px;
+  padding-top: 0px;
+  position: relative;
+  text-align: left;
+  text-decoration-color: rgb(255, 255, 255);
+  text-decoration-line: none;
+  text-decoration-style: solid;
+  text-rendering: optimizelegibility;
+  text-size-adjust: 100%;
+  width: 48px;
+  -webkit-font-smoothing: antialiased;
+}
