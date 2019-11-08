@@ -1,47 +1,29 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-/* eslint-disable react/jsx-filename-extension */
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
-import "./style.css";
+import "./loginpage.css";
 import { Container, Modal } from "semantic-ui-react";
 import { Redirect } from "react-router";
-import jf from "jotform";
+import JotFormAPI from "jotform";
 
-class StartPage extends Component {
-  _isMounted = false;
+const styleLinkHref =
+  "https://cdn.jsdelivr.net/npm/semantic-ui/dist/semantic.min.css";
 
+class LoginPage extends Component {
   constructor(props) {
     super(props);
-    this.state = { loginSuccess: false, loginFailed: false };
+    const { authorized } = this.props;
+    this.state = { loginSuccess: authorized, loginFailed: false };
   }
 
-  componentDidMount() {
-    this._isMounted = true;
+  /* Gets username and password of user from login form */
 
-    if (this._isMounted) {
-      const { authorized } = this.props;
-      this.setState({
-        loginFailed: false
-      });
-      this.setState({
-        loginSuccess: authorized
-      });
-    }
-  }
-
-  componentWillUnmount() {
-    this._isMounted = false;
-  }
-
-  login = () => {
-    const self = this;
-    const { setAuthTrue } = this.props;
+  getFormData = () => {
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
-
     const atIndex = username.indexOf("@");
     const bodyFormData = new FormData();
     bodyFormData.set(
@@ -52,10 +34,19 @@ class StartPage extends Component {
     bodyFormData.set("appName", "SubmissionGenerator");
     bodyFormData.set("access", "full");
 
+    return bodyFormData;
+  };
+
+  /* Login operation using JotForm API */
+
+  login = () => {
+    const self = this;
+    const { getUserData } = this.props;
+    const formData = this.getFormData();
     axios({
       method: "post",
       url: "https://api.jotform.com/user/login",
-      data: bodyFormData,
+      data: formData,
       config: { headers: { "Content-Type": "multipart/form-data" } }
     })
       .then(function success(response) {
@@ -64,32 +55,35 @@ class StartPage extends Component {
           self.setState({ loginFailed: true });
           self.setState({ loginSuccess: false });
         } else {
-          jf.options({
+          JotFormAPI.options({
             debug: true,
             apiKey: userInfo.appKey
           });
-          // setUserInfo(userInfo);
           if (userInfo.appKey !== undefined) {
-            setAuthTrue();
+            getUserData();
             self.setState({ loginSuccess: true });
             self.setState({ loginFailed: false });
-            // setAlreadyLoggedin();
           }
         }
       })
       .catch(function fail() {});
   };
 
+  /* Renders Login Form */
+
   render() {
     const styleLink = document.createElement("link");
     styleLink.rel = "stylesheet";
-    styleLink.href =
-      "https://cdn.jsdelivr.net/npm/semantic-ui/dist/semantic.min.css";
+    styleLink.href = styleLinkHref;
     document.head.appendChild(styleLink);
     const { loginSuccess, loginFailed } = this.state;
+
+    /* Redirects authorized user to forms page */
+
     if (loginSuccess) {
       return <Redirect to="/forms" />;
     }
+
     return (
       <>
         <img
@@ -174,9 +168,9 @@ class StartPage extends Component {
   }
 }
 
-StartPage.propTypes = {
+LoginPage.propTypes = {
   authorized: PropTypes.bool.isRequired,
-  setAuthTrue: PropTypes.func.isRequired
+  getUserData: PropTypes.func.isRequired
 };
 
-export default StartPage;
+export default LoginPage;

@@ -87,9 +87,9 @@ class FakeData {
     return Math.floor(Math.random() * (max - min) + min);
   }
 
-  isSelectedType(selectedItems, answerType) {
-    for (let index = 0; index < selectedItems.length; index += 1) {
-      if (selectedItems[index].type === answerType) {
+  isSelectedType(selectedQuestions, answerType) {
+    for (let index = 0; index < selectedQuestions.length; index += 1) {
+      if (selectedQuestions[index].type === answerType) {
         return true;
       }
     }
@@ -110,36 +110,44 @@ class FakeData {
   }
 
   generateAnswer(
-    answerType,
-    object,
-    index,
-    questions,
+    submission,
+    type,
+    questionID,
+    question,
     formId,
     username,
     submissionID
   ) {
-    switch (answerType) {
+    switch (type) {
       case "control_email": {
-        this.assign(object, [index, "answer"], faker.internet.email());
+        this.assign(submission, [questionID, "answer"], faker.internet.email());
         break;
       }
       case "control_fullname": {
-        this.assign(object, [index, "answer", "first"], faker.name.firstName());
-        this.assign(object, [index, "answer", "last"], faker.name.lastName());
+        this.assign(
+          submission,
+          [questionID, "answer", "first"],
+          faker.name.firstName()
+        );
+        this.assign(
+          submission,
+          [questionID, "answer", "last"],
+          faker.name.lastName()
+        );
         break;
       }
       case "control_number": {
         this.assign(
-          object,
-          [index, "answer"],
+          submission,
+          [questionID, "answer"],
           this.getRandomNumber(0, 5000).toString()
         );
         break;
       }
       case "control_spinner": {
         this.assign(
-          object,
-          [index, "answer"],
+          submission,
+          [questionID, "answer"],
           this.getRandomNumber(0, 5000).toString()
         );
         break;
@@ -147,20 +155,19 @@ class FakeData {
       case "control_phone": {
         const countryCode = faker.random.number();
         const number = faker.phone.phoneNumber();
-        this.assign(object, [index, "answer", "area"], countryCode);
-        this.assign(object, [index, "answer", "phone"], number);
+        this.assign(submission, [questionID, "answer", "area"], countryCode);
+        this.assign(submission, [questionID, "answer", "phone"], number);
         break;
       }
 
       case "control_matrix": {
-        const mcolumns = questions.mcolumns.split("|");
-        const mrows = questions.mrows.split("|");
-        const { emojiCount } = questions;
-
+        const mcolumns = question.mcolumns.split("|");
+        const mrows = question.mrows.split("|");
+        const { emojiCount } = question;
         for (let i = 0; i < mrows.length; i += 1) {
           this.assign(
-            object,
-            [index, "answer", mrows[i]],
+            submission,
+            [questionID, "answer", mrows[i]],
             mcolumns[this.getRandomNumber(0, emojiCount - 1)]
           );
         }
@@ -169,20 +176,20 @@ class FakeData {
       }
 
       case "control_rating": {
-        const { stars } = questions;
+        const { stars } = question;
         this.assign(
-          object,
-          [index, "answer"],
+          submission,
+          [questionID, "answer"],
           this.getRandomNumber(1, stars).toString()
         );
         break;
       }
 
       case "control_scale": {
-        const { scaleAmount } = questions;
+        const { scaleAmount } = question;
         this.assign(
-          object,
-          [index, "answer"],
+          submission,
+          [questionID, "answer"],
           this.getRandomNumber(1, scaleAmount).toString()
         );
         break;
@@ -195,12 +202,20 @@ class FakeData {
         const country = faker.address.country();
         const postal = faker.address.zipCode();
         const state = faker.address.state();
-        this.assign(object, [index, "answer", "addr_line1"], addrLine1);
-        this.assign(object, [index, "answer", "addr_line2"], addrLine2);
-        this.assign(object, [index, "answer", "city"], city);
-        this.assign(object, [index, "answer", "country"], country);
-        this.assign(object, [index, "answer", "postal"], postal);
-        this.assign(object, [index, "answer", "state"], state);
+        this.assign(
+          submission,
+          [questionID, "answer", "addr_line1"],
+          addrLine1
+        );
+        this.assign(
+          submission,
+          [questionID, "answer", "addr_line2"],
+          addrLine2
+        );
+        this.assign(submission, [questionID, "answer", "city"], city);
+        this.assign(submission, [questionID, "answer", "country"], country);
+        this.assign(submission, [questionID, "answer", "postal"], postal);
+        this.assign(submission, [questionID, "answer", "state"], state);
         break;
       }
 
@@ -209,17 +224,17 @@ class FakeData {
         const day = this.randomDay();
         const year = this.getRandomNumber(1900, 2050).toString();
 
-        this.assign(object, [index, "answer", "day"], month);
-        this.assign(object, [index, "answer", "month"], day);
-        this.assign(object, [index, "answer", "year"], year);
+        this.assign(submission, [questionID, "answer", "day"], month);
+        this.assign(submission, [questionID, "answer", "month"], day);
+        this.assign(submission, [questionID, "answer", "year"], year);
         break;
       }
       case "control_textbox": {
-        this.assign(object, [index, "answer"], faker.lorem.sentence());
+        this.assign(submission, [questionID, "answer"], faker.lorem.sentence());
         break;
       }
       case "control_textarea": {
-        this.assign(object, [index, "answer"], faker.lorem.sentence());
+        this.assign(submission, [questionID, "answer"], faker.lorem.sentence());
         break;
       }
       case "control_time": {
@@ -232,36 +247,44 @@ class FakeData {
         const hourSelect = this.randomHour();
         const minuteSelect = this.randomMinute();
 
-        this.assign(object, [index, "answer", "ampm"], ampm);
-        this.assign(object, [index, "answer", "hourSelect"], hourSelect);
-        this.assign(object, [index, "answer", "minuteSelect"], minuteSelect);
+        this.assign(submission, [questionID, "answer", "ampm"], ampm);
+        this.assign(
+          submission,
+          [questionID, "answer", "hourSelect"],
+          hourSelect
+        );
+        this.assign(
+          submission,
+          [questionID, "answer", "minuteSelect"],
+          minuteSelect
+        );
         break;
       }
       case "control_dropdown": {
-        const optionsDropdown = questions.options.split("|");
+        const optionsDropdown = question.options.split("|");
         this.assign(
-          object,
-          [index, "answer"],
+          submission,
+          [questionID, "answer"],
           optionsDropdown[this.getRandomNumber(0, optionsDropdown.length - 1)]
         );
         break;
       }
       case "control_radio": {
-        const optionsRadio = questions.options.split("|");
+        const optionsRadio = question.options.split("|");
         this.assign(
-          object,
-          [index, "answer"],
+          submission,
+          [questionID, "answer"],
           optionsRadio[this.getRandomNumber(0, optionsRadio.length - 1)]
         );
         break;
       }
       case "control_checkbox": {
-        const optionsCheckbox = questions.options.split("|");
+        const optionsCheckbox = question.options.split("|");
         const checkBoxArray = [];
         checkBoxArray.push(
           optionsCheckbox[this.getRandomNumber(0, optionsCheckbox.length - 1)]
         );
-        this.assign(object, [index, "answer"], checkBoxArray);
+        this.assign(submission, [questionID, "answer"], checkBoxArray);
         break;
       }
       case "control_fileupload": {
@@ -278,7 +301,7 @@ class FakeData {
         const fileArray = [];
 
         fileArray.push(url + userName + formID + submissionId + fileName);
-        this.assign(object, [index, "answer"], fileArray);
+        this.assign(submission, [questionID, "answer"], fileArray);
         break;
       }
       default:

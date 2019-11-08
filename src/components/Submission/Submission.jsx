@@ -1,5 +1,4 @@
 /* eslint-disable react/jsx-props-no-spreading */
-/* eslint-disable react/jsx-filename-extension */
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { grey } from "@material-ui/core/colors";
@@ -7,7 +6,9 @@ import Checkbox from "@material-ui/core/Checkbox";
 import PropTypes from "prop-types";
 import ReactJson from "react-json-view";
 
-const GreenCheckbox = withStyles({
+/* Check box element style */
+
+const SubmissionCheckBox = withStyles({
   root: {
     color: grey[400],
     "&$checked": {
@@ -23,7 +24,7 @@ export default function Submission(props) {
     selected: PropTypes.bool.isRequired,
     id: PropTypes.number.isRequired,
     handleChangeCheckBox: PropTypes.func.isRequired,
-    handleChangeSubmission: PropTypes.func.isRequired
+    handleEditSubmission: PropTypes.func.isRequired
   };
 
   const {
@@ -31,23 +32,19 @@ export default function Submission(props) {
     selected,
     id,
     handleChangeCheckBox,
-    handleChangeSubmission
+    handleEditSubmission
   } = props;
-
-  function update(edit, index) {
-    handleChangeSubmission(edit, index);
-  }
 
   return (
     <>
-      <GreenCheckbox
+      <SubmissionCheckBox
         checked={selected}
         onChange={() => handleChangeCheckBox(id)}
         value="checkedG"
       />
       <ReactJson
         onEdit={edit => {
-          update(edit, id);
+          handleEditSubmission(edit, id);
         }}
         src={JSON.parse(submission)}
       />

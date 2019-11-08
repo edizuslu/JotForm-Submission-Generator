@@ -2,7 +2,6 @@
 /* eslint-disable react/jsx-curly-newline */
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/jsx-wrap-multilines */
-/* eslint-disable react/jsx-filename-extension */
 import React from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
@@ -11,7 +10,7 @@ import AddIcon from "@material-ui/icons/Add";
 import { green } from "@material-ui/core/colors";
 import { Button, Modal, Icon, Input } from "semantic-ui-react";
 import { Link } from "react-router-dom";
-import QuestionFilter from "../QuestionFilter/QuestionFilter";
+import QuestionFilter from "../../QuestionFilter/QuestionFilter";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -36,22 +35,20 @@ export default function NewSubmission(props) {
   NewSubmission.propTypes = {
     widgets: PropTypes.array.isRequired,
     selectedWidgets: PropTypes.array.isRequired,
-    setSelectedWidgets: PropTypes.func.isRequired,
-    submissionCountInvalid: PropTypes.bool.isRequired,
-    sendSubmission: PropTypes.func.isRequired,
-    submissionCountChange: PropTypes.func.isRequired
+    setCurrentForm: PropTypes.func.isRequired
   };
 
   const classes = useStyles();
 
-  const {
-    widgets,
-    selectedWidgets,
-    setSelectedWidgets,
-    submissionCountInvalid,
-    sendSubmission,
-    submissionCountChange
-  } = props;
+  const { widgets, selectedWidgets, setCurrentForm } = props;
+
+  const [selecteds, setSelecteds] = React.useState(selectedWidgets);
+
+  const [submissionCount, setSubmissionCount] = React.useState(1);
+
+  const disabledLink = submissionCount === "" ? "none" : "";
+
+  const disabledButton = submissionCount === "";
 
   return (
     <Modal
@@ -66,10 +63,10 @@ export default function NewSubmission(props) {
       <Modal.Content image>
         <Modal.Description>
           <QuestionFilter
-            formID="0"
+            form={{ newSubmission: true }}
             questions={widgets}
-            selectedItems={selectedWidgets}
-            setSelectedQuestions={setSelectedWidgets}
+            selectedQuestions={selecteds}
+            setSelectedQuestions={setSelecteds}
           />
         </Modal.Description>
       </Modal.Content>
@@ -78,18 +75,19 @@ export default function NewSubmission(props) {
           label={{ basic: true, content: "Number of Submission" }}
           labelPosition="right"
           style={{ float: "left" }}
-          onChange={submissionCountChange}
+          type="number"
+          value={submissionCount}
+          onChange={e => setSubmissionCount(e.target.value)}
           placeholder="Submission count..."
         />
-        {submissionCountInvalid ? (
+        <Link to="/submissions" style={{ pointerEvents: disabledLink }}>
           <Button
-            disabled={submissionCountInvalid}
+            disabled={disabledButton}
             onClick={() =>
-              sendSubmission({
+              setCurrentForm({
                 id: "new_submission",
-                selectedItems: selectedWidgets.filter(
-                  widget => widget !== false
-                )
+                selectedQuestions: selecteds.filter(widget => widget !== false),
+                submissionCount
               })
             }
             primary
@@ -97,25 +95,7 @@ export default function NewSubmission(props) {
             Next
             <Icon name="right chevron" />
           </Button>
-        ) : (
-          <Link to="/send-submission" style={{ color: "aliceblue" }}>
-            <Button
-              disabled={submissionCountInvalid}
-              onClick={() =>
-                sendSubmission({
-                  id: "new_submission",
-                  selectedItems: selectedWidgets.filter(
-                    widget => widget !== false
-                  )
-                })
-              }
-              primary
-            >
-              Next
-              <Icon name="right chevron" />
-            </Button>
-          </Link>
-        )}
+        </Link>
       </Modal.Actions>
     </Modal>
   );
