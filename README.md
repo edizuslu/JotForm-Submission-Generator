@@ -1,4 +1,4 @@
-# JotForm-Submission-Generator [![Awesome](https://www.jotform.com/resources/assets/logo/jotform-icon-white-280x280.jpg)]
+# JotForm-Submission-Generator
 
 This project is random submission generator tool of JotForm.
 
@@ -11,7 +11,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 ### Demo
 
-<p align="center">
+<p align="center" margin-bottom: 25px>
   <img src="https://github.com/edizuslu/JotForm-Submission-Generator/blob/master/public/LoginPage.PNG" ></a>
   <img src="https://github.com/edizuslu/JotForm-Submission-Generator/blob/master/public/FormsPage.PNG" ></a>
   <img src="https://github.com/edizuslu/JotForm-Submission-Generator/blob/master/public/QuestionFilter.PNG"></a>
