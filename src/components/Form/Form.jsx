@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-filename-extension */
 /* eslint-disable react/jsx-wrap-multilines */
 /* eslint-disable react/forbid-prop-types */
 import React from "react";
@@ -10,24 +11,36 @@ import {
   Placeholder,
   Modal,
   Icon,
-  Input
+  Input,
+  Label
 } from "semantic-ui-react";
-import QuestionFilter from "../../QuestionFilter/QuestionFilter";
+import QuestionFilter from "../QuestionFilter/QuestionFilter";
 
 class Form extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { loading: false };
+  }
+
+  /* Loading animation */
+
+  componentDidMount() {
+    this.setState({ loading: true });
+
+    setTimeout(() => {
+      this.setState({ loading: false });
+    }, 1500);
   }
 
   render() {
     const {
       form,
-      loading,
       setSelectedQuestions,
       setCurrentForm,
       submissionCountChange
     } = this.props;
+
+    const { loading } = this.state;
 
     const disabledLink = form.submissionCount === "" ? "none" : "";
 
@@ -36,11 +49,14 @@ class Form extends React.Component {
     return (
       <Card key={form.header}>
         {loading ? (
-          <Placeholder>
+          <Placeholder style={{ width: "290px", height: "193px" }}>
             <Placeholder.Image square />
           </Placeholder>
         ) : (
-          <Image src="https://www.jotform.com/resources/assets/podo/podo_4.png" />
+          <Image
+            style={{ width: "290px", height: "193px" }}
+            src={form.backGroundImage}
+          />
         )}
 
         <Card.Content>
@@ -59,14 +75,24 @@ class Form extends React.Component {
               <Card.Header>{form.header}</Card.Header>
               <Card.Meta>{`Created At: ${form.created_at}`}</Card.Meta>
               <Card.Description>
-                {`Last Submission:${form.last_submission}`}
+                <Label color="orange">
+                  <Icon name="mail" />
+                  {form.subCount}
+                </Label>
               </Card.Description>
             </>
           )}
         </Card.Content>
 
         <Card.Content extra>
-          <Modal trigger={<Button>Filter Questions</Button>} closeIcon>
+          <Modal
+            trigger={
+              <Button style={{ width: "100%" }} inverted color="green">
+                Filter Question
+              </Button>
+            }
+            closeIcon
+          >
             <Modal.Header>Filter Questions</Modal.Header>
 
             <Modal.Content image>
@@ -94,10 +120,10 @@ class Form extends React.Component {
                   <Button
                     disabled={disabledButton}
                     onClick={() => setCurrentForm(form)}
-                    primary
+                    inverted
+                    color="green"
                   >
                     Next
-                    <Icon name="right chevron" />
                   </Button>
                 </Link>
               </>
@@ -111,7 +137,6 @@ class Form extends React.Component {
 
 Form.propTypes = {
   form: PropTypes.object.isRequired,
-  loading: PropTypes.bool.isRequired,
   setSelectedQuestions: PropTypes.func.isRequired,
   setCurrentForm: PropTypes.func.isRequired,
   submissionCountChange: PropTypes.func.isRequired

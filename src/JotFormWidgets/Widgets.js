@@ -48,7 +48,6 @@ export default {
       control_gocardless: "GoCardless",
       control_sofort: "Sofort",
       control_pagseguro: "PagSeguro",
-      control_payment: "PurchaseOrder",
       control_firstdata: "FirstData",
       control_cardconnect: "CardConnect",
       control_worldpayus: "WorldpayUS",

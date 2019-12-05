@@ -1,13 +1,14 @@
+/* eslint-disable react/jsx-filename-extension */
 /* eslint-disable no-param-reassign */
 import React, { Component } from "react";
 import "./App.css";
 import { Switch, Route } from "react-router-dom";
 import JotFormAPI from "jotform";
-import LoginPage from "../components/LoginPage/LoginPage";
-import Forms from "../components/Forms/Forms";
-import Widgets from "../JotFormWidgets/Widgets";
-import FakeDataClass from "../FakeData/FakeData";
-import Submissions from "../components/Submission/Submissions/Submissions";
+import LoginPage from "./components/LoginPage/LoginPage";
+import Forms from "./containers/Forms";
+import Widgets from "./JotFormWidgets/Widgets";
+import FakeDataClass from "./FakeData/FakeData";
+import Submissions from "./containers/Submissions";
 
 const FakeData = new FakeDataClass();
 
@@ -47,12 +48,15 @@ class App extends Component {
       const keys = Object.keys(formElements[widgetKeys[index]]);
       const elements = formElements[widgetKeys[index]];
       for (let i = 0; i < keys.length; i += 1) {
-        jotformWidgets.push({
-          id: qid.toString(),
-          label: elements[keys[i]],
-          type: keys[i]
-        });
-        qid += 1;
+        if (FakeData.isInputType(keys[i])) {
+          jotformWidgets.push({
+            id: qid.toString(),
+            label: elements[keys[i]],
+            type: keys[i],
+            question: FakeData.getDefaultQuestions(keys[i])
+          });
+          qid += 1;
+        }
       }
     }
     return {
@@ -89,6 +93,26 @@ class App extends Component {
         form.submissionCount = 1;
       });
     });
+    console.log("Form questions : ");
+    console.log(forms);
+  };
+
+  /* Gets all properties of user forms and sets. */
+
+  getFormsProperties = forms => {
+    forms.forEach(function getQuestion(form) {
+      JotFormAPI.getFormProperties(form.id).then(function getQuestionsSuccess(
+        response
+      ) {
+        const { pageBackgroundImage, products, taxes, coupons } = response;
+        const defaultFormImage = "../podo_13.png";
+        form.backGroundImage =
+          pageBackgroundImage === undefined || pageBackgroundImage === ""
+            ? defaultFormImage
+            : pageBackgroundImage;
+        form.properties = { products, taxes, coupons };
+      });
+    });
   };
 
   /* Gets all forms of user. */
@@ -104,14 +128,12 @@ class App extends Component {
           header: formsResponse[index].title,
           avatar: "https://www.jotform.com/resources/assets/podo/podo_4.png",
           created_at: formsResponse[index].created_at,
-          last_submission:
-            formsResponse[index].last_submission === null
-              ? "No Submission"
-              : formsResponse[index].last_submission,
+          subCount: formsResponse[index].count,
           key: index
         });
       }
       self.getFormsQuestions(forms);
+      self.getFormsProperties(forms);
     });
     return { forms };
   };

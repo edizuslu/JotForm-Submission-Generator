@@ -9,9 +9,9 @@ import PropTypes from "prop-types";
 import JotFormAPI from "jotform";
 import { Button, Card, Checkbox, Popup } from "semantic-ui-react";
 import { Redirect } from "react-router";
-import Submission from "../Submission";
-import FakeDataClass from "../../../FakeData/FakeData";
-import AppHeader from "../../AppHeader/AppHeader";
+import Submission from "../components/Submission/Submission";
+import FakeDataClass from "../FakeData/FakeData";
+import AppHeader from "../components/AppHeader/AppHeader";
 
 const FakeData = new FakeDataClass();
 
@@ -80,7 +80,8 @@ class Submissions extends Component {
           form.id,
           user.username,
           submissionID,
-          submissionQuestions
+          submissionQuestions,
+          form
         );
       }
       submissionsArray.push(submission);
@@ -117,11 +118,19 @@ class Submissions extends Component {
     let copyString = "";
     for (let index = 0; index < selectedSubmissions.length; index += 1) {
       if (selectedSubmissions[index]) {
-        copyString += `${JSON.stringify(submissions[index], null, 2)}\n`;
+        copyString += `"${index + 1}":\n${JSON.stringify(
+          submissions[index],
+          null,
+          2
+        )},\n`;
+        // copyString += index === selectedSubmissions.length - 1 ? "\n" : ",\n";
       }
     }
+    copyString = `${copyString.substring(0, copyString.length - 3)}\n}`;
+    console.log("Copy string :");
+    console.log(copyString);
     const el = document.createElement("textarea");
-    el.value = copyString;
+    el.value = `{${copyString}}`;
     el.setAttribute("readonly", "");
     el.style = { position: "absolute", left: "-9999px" };
     document.body.appendChild(el);
@@ -206,16 +215,17 @@ class Submissions extends Component {
                   <Button
                     style={{
                       background: buttonBackground
+                      // backgroundColor: "#fa8900"
                     }}
                     onClick={() => this.copyToClipboard()}
-                    primary
+                    color="orange"
                   >
                     Copy
                   </Button>
                 }
               />
               <Popup
-                content="Sended successfully!"
+                content="Sent successfully!"
                 on="click"
                 pinned
                 position="bottom center"
@@ -224,9 +234,10 @@ class Submissions extends Component {
                     disabled={form.id === "new_submission"}
                     style={{
                       background: buttonBackground
+                      // backgroundColor: "#fa8900"
                     }}
                     onClick={() => this.sendSubmissions()}
-                    primary
+                    color="orange"
                   >
                     Send
                   </Button>

@@ -4,9 +4,9 @@ import React, { Component } from "react";
 import { Card, Container } from "semantic-ui-react";
 import PropTypes from "prop-types";
 import { Redirect } from "react-router";
-import Form from "./Form/Form";
-import NewSubmission from "../Submission/NewSubmission/NewSubmission";
-import AppHeader from "../AppHeader/AppHeader";
+import Form from "../components/Form/Form";
+import NewSubmission from "../components/NewSubmission/NewSubmission";
+import AppHeader from "../components/AppHeader/AppHeader";
 
 const styleLinkHref =
   "https://cdn.jsdelivr.net/npm/semantic-ui/dist/semantic.min.css";

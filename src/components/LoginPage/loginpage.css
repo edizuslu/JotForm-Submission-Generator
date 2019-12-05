@@ -115,8 +115,8 @@ form input {
   list-style-position: outside;
   list-style-type: none;
   margin-bottom: 0px;
-  margin-left: 239.6px;
-  margin-right: 239.6px;
+  margin-left: auto;
+  margin-right: auto;
   margin-top: 0px;
   max-width: 304px;
   padding-bottom: 0px;
@@ -263,7 +263,6 @@ form input {
   -webkit-appearance: none;
   -webkit-rtl-ordering: logical;
   -webkit-text-fill-color: rgb(0, 0, 0);
-  -webkit-border-image: none;
 }
 
 .locale {
@@ -406,7 +405,6 @@ form input {
   writing-mode: horizontal-tb;
   -webkit-appearance: none;
   -webkit-text-fill-color: rgb(1, 189, 111);
-  -webkit-border-image: none;
 }
 
 .login-button {
@@ -488,7 +486,6 @@ form input {
   writing-mode: horizontal-tb;
   -webkit-appearance: none;
   -webkit-text-fill-color: rgb(1, 189, 111);
-  -webkit-border-image: none;
 }
 
 .logout-button {
@@ -570,7 +567,6 @@ form input {
   writing-mode: horizontal-tb;
   -webkit-appearance: none;
   -webkit-text-fill-color: rgb(1, 189, 111);
-  -webkit-border-image: none;
 }
 
 .spanText {
@@ -777,7 +773,6 @@ form input {
   writing-mode: horizontal-tb;
   -webkit-appearance: none;
   -webkit-text-fill-color: rgb(1, 189, 111);
-  -webkit-border-image: none;
 }
 
 .login-failed {

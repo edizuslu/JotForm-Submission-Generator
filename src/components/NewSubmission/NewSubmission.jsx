@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-filename-extension */
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable react/jsx-curly-newline */
 /* eslint-disable react/jsx-props-no-spreading */
@@ -8,9 +9,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
 import { green } from "@material-ui/core/colors";
-import { Button, Modal, Icon, Input } from "semantic-ui-react";
+import { Button, Modal, Input } from "semantic-ui-react";
 import { Link } from "react-router-dom";
-import QuestionFilter from "../../QuestionFilter/QuestionFilter";
+import QuestionFilter from "../QuestionFilter/QuestionFilter";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -20,11 +21,7 @@ const useStyles = makeStyles(theme => ({
     position: "fixed",
     bottom: theme.spacing(2),
     right: theme.spacing(2),
-    backgroundColor: "#444"
-  },
-  fabGreen: {
-    color: theme.palette.common.white,
-    backgroundColor: green[500],
+    backgroundColor: "#444",
     "&:hover": {
       backgroundColor: green[600]
     }
@@ -90,10 +87,10 @@ export default function NewSubmission(props) {
                 submissionCount
               })
             }
-            primary
+            inverted
+            color="green"
           >
             Next
-            <Icon name="right chevron" />
           </Button>
         </Link>
       </Modal.Actions>

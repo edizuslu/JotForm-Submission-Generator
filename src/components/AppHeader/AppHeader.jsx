@@ -68,7 +68,6 @@ export default function AppHeader(props) {
   const { avatarUrl, name, year } = user;
 
   /* Logout operation with JotformAPI */
-
   function logout() {
     axios.get(`https://api.jotform.com/v1/user/logout`).then(() => {
       setAuthorized(false);
@@ -132,7 +131,7 @@ export default function AppHeader(props) {
                     <Card.Meta>Joined in {year}</Card.Meta>
                   </Card.Content>
                   <Card.Content extra>
-                    <Button onClick={logout} basic color="red">
+                    <Button onClick={logout} inverted color="red">
                       Logout
                     </Button>
                   </Card.Content>

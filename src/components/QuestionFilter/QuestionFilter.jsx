@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-filename-extension */
 /* eslint-disable react/forbid-prop-types */
 import React, { Component } from "react";
 import MultiSelect from "@kenshooui/react-multi-select";

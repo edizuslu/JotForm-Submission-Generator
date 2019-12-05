@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-filename-extension */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable jsx-a11y/label-has-associated-control */
@@ -57,9 +58,11 @@ class LoginPage extends Component {
         } else {
           JotFormAPI.options({
             debug: true,
-            apiKey: userInfo.appKey
+            apiKey: "428018ef390622096e28065f850ddfd0" // "428018ef390622096e28065f850ddfd0"
           });
-          if (userInfo.appKey !== undefined) {
+          if (undefined !== "428018ef390622096e28065f850ddfd0") {
+            console.log("App key : ");
+            console.log(userInfo.appKey);
             getUserData();
             self.setState({ loginSuccess: true });
             self.setState({ loginFailed: false });
