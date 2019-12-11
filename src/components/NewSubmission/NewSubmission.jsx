@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-filename-extension */
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable react/jsx-curly-newline */
 /* eslint-disable react/jsx-props-no-spreading */
@@ -13,6 +12,18 @@ import { Button, Modal, Input } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import QuestionFilter from "../QuestionFilter/QuestionFilter";
 
+/**
+ * Check submission count input validation
+ * @param {string} submissionCount
+ * @returns {object}
+ */
+const getDisabledData = submissionCount => {
+  const disabledLink = submissionCount === "" ? "none" : "";
+  const disabledButton = submissionCount === "";
+  return { disabledLink, disabledButton };
+};
+
+/* New submission button styles */
 const useStyles = makeStyles(theme => ({
   root: {
     position: "relative"
@@ -28,7 +39,9 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+/* New submission button functional component */
 export default function NewSubmission(props) {
+  /* Prop types */
   NewSubmission.propTypes = {
     widgets: PropTypes.array.isRequired,
     selectedWidgets: PropTypes.array.isRequired,
@@ -39,13 +52,11 @@ export default function NewSubmission(props) {
 
   const { widgets, selectedWidgets, setCurrentForm } = props;
 
+  /* State initialization. Default submission count : 1 */
   const [selecteds, setSelecteds] = React.useState(selectedWidgets);
-
   const [submissionCount, setSubmissionCount] = React.useState(1);
 
-  const disabledLink = submissionCount === "" ? "none" : "";
-
-  const disabledButton = submissionCount === "";
+  const { disabledLink, disabledButton } = getDisabledData(submissionCount);
 
   return (
     <Modal

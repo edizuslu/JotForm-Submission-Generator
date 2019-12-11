@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-filename-extension */
 /* eslint-disable react/jsx-wrap-multilines */
 /* eslint-disable react/forbid-prop-types */
 import React from "react";
@@ -16,21 +15,32 @@ import {
 } from "semantic-ui-react";
 import QuestionFilter from "../QuestionFilter/QuestionFilter";
 
+/* Form class component */
 class Form extends React.Component {
   constructor(props) {
     super(props);
     this.state = { loading: false };
   }
 
-  /* Loading animation */
-
+  /* Loading animation with placeholders, lazy loading */
   componentDidMount() {
     this.setState({ loading: true });
-
     setTimeout(() => {
       this.setState({ loading: false });
     }, 1500);
   }
+
+  /**
+   * Get link disabled and button disabled values
+   * @param {object} form
+   * @returns {object}
+   */
+  getDisabledData = form => {
+    const { submissionCount } = form;
+    const disabledLink = submissionCount === "" ? "none" : "";
+    const disabledButton = submissionCount === "";
+    return { disabledLink, disabledButton };
+  };
 
   render() {
     const {
@@ -41,11 +51,9 @@ class Form extends React.Component {
     } = this.props;
 
     const { loading } = this.state;
+    const { disabledLink, disabledButton } = this.getDisabledData(form);
 
-    const disabledLink = form.submissionCount === "" ? "none" : "";
-
-    const disabledButton = form.submissionCount === "";
-
+    /* Renders form component */
     return (
       <Card key={form.header}>
         {loading ? (
@@ -58,7 +66,6 @@ class Form extends React.Component {
             src={form.backGroundImage}
           />
         )}
-
         <Card.Content>
           {loading ? (
             <Placeholder>
@@ -94,7 +101,6 @@ class Form extends React.Component {
             closeIcon
           >
             <Modal.Header>Filter Questions</Modal.Header>
-
             <Modal.Content image>
               <Modal.Description>
                 <QuestionFilter
@@ -135,6 +141,7 @@ class Form extends React.Component {
   }
 }
 
+/* Prop types */
 Form.propTypes = {
   form: PropTypes.object.isRequired,
   setSelectedQuestions: PropTypes.func.isRequired,

@@ -17,8 +17,7 @@ import PropTypes from "prop-types";
 import Avatar from "@material-ui/core/Avatar";
 import axios from "axios";
 
-/* Styles of App Header */
-
+/* App header style */
 const useStyles = makeStyles(theme => ({
   grow: {
     flexGrow: 1
@@ -43,31 +42,36 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+/* App Header Functional Component */
 export default function AppHeader(props) {
+  /* Prop types */
   AppHeader.propTypes = {
     setAuthFalse: PropTypes.func.isRequired,
     user: PropTypes.object.isRequired
   };
 
-  const classes = useStyles();
-
+  /* State initialization */
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
+  /* Handle mobile menu closing action */
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
   };
 
+  /**
+   * Handle mobile menu opening action
+   * @param {object} event
+   */
   const handleMobileMenuOpen = event => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
+  /* State initialization */
   const [authorized, setAuthorized] = useState(true);
   const { setAuthFalse, user } = props;
-  const { avatarUrl, name, year } = user;
 
-  /* Logout operation with JotformAPI */
+  /* Logout function using axios */
   function logout() {
     axios.get(`https://api.jotform.com/v1/user/logout`).then(() => {
       setAuthorized(false);
@@ -75,6 +79,7 @@ export default function AppHeader(props) {
     });
   }
 
+  /* Mobile menu for responsive design */
   const mobileMenuId = "primary-search-account-menu-mobile";
   const renderMobileMenu = (
     <Menu
@@ -90,12 +95,17 @@ export default function AppHeader(props) {
     </Menu>
   );
 
-  /* Redirects unauthorized user to login page */
+  /* User account info */
+  const { avatarUrl, name, year } = user;
 
+  const classes = useStyles();
+
+  /* Redirects unauthorized user to login page */
   if (!authorized) {
     return <Redirect to="/" />;
   }
 
+  /* Renders app header  */
   return (
     <div className={classes.grow}>
       <AppBar position="static" style={{ backgroundColor: "#444" }}>
@@ -110,7 +120,6 @@ export default function AppHeader(props) {
               <Avatar src="https://www.jotform.com/resources/assets/icon/min/icon.jpg" />
             </IconButton>
           </Link>
-
           <Typography
             className={classes.title}
             variant="h6"

@@ -403,6 +403,8 @@ export default {
 };
 
 /*
+Data retrieval
+
 let elements = document.getElementsByClassName("field-item");
 let widgets = {};
 

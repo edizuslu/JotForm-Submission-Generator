@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-filename-extension */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable jsx-a11y/label-has-associated-control */
@@ -13,6 +12,7 @@ import JotFormAPI from "jotform";
 const styleLinkHref =
   "https://cdn.jsdelivr.net/npm/semantic-ui/dist/semantic.min.css";
 
+/* Login Page class component */
 class LoginPage extends Component {
   constructor(props) {
     super(props);
@@ -20,73 +20,111 @@ class LoginPage extends Component {
     this.state = { loginSuccess: authorized, loginFailed: false };
   }
 
-  /* Gets username and password of user from login form */
-
-  getFormData = () => {
+  /**
+   * Gets username
+   * @returns {string}
+   */
+  getUsername = () => {
     const username = document.getElementById("username").value;
-    const password = document.getElementById("password").value;
     const atIndex = username.indexOf("@");
+    return atIndex > -1 ? username.substring(0, atIndex) : username;
+  };
+
+  /**
+   * Gets password
+   * @returns {string}
+   */
+  getPassword = () => {
+    return document.getElementById("password").value;
+  };
+
+  /**
+   * Gets login form data
+   * @returns {FormData}
+   */
+  getLoginFormData = () => {
     const bodyFormData = new FormData();
-    bodyFormData.set(
-      "username",
-      atIndex > -1 ? username.substring(0, atIndex) : username
-    );
-    bodyFormData.set("password", password);
+    bodyFormData.set("username", this.getUsername());
+    bodyFormData.set("password", this.getPassword());
     bodyFormData.set("appName", "SubmissionGenerator");
     bodyFormData.set("access", "full");
-
     return bodyFormData;
   };
 
-  /* Login operation using JotForm API */
+  /**
+   * Login failed check
+   * @param {object} response
+   * @returns {boolean}
+   */
+  isFailed = response => {
+    return response.data.responseCode === 401;
+  };
 
+  /**
+   * Set login results
+   * @param {boolean} failed
+   * @param {boolean} success
+   */
+  setLoginResult = (failed, success) => {
+    this.setState({ loginFailed: failed });
+    this.setState({ loginSuccess: success });
+  };
+
+  /**
+   * Set  JotForm API Configuration
+   * @param {object} response
+   */
+  setAPIConfiguration = response => {
+    const { appKey } = response.data.content;
+    JotFormAPI.options({
+      debug: true,
+      apiKey: appKey
+    });
+  };
+
+  /* Login function using axios */
   login = () => {
     const self = this;
     const { getUserData } = this.props;
-    const formData = this.getFormData();
+    const formData = this.getLoginFormData();
     axios({
       method: "post",
       url: "https://api.jotform.com/user/login",
       data: formData,
-      config: { headers: { "Content-Type": "multipart/form-data" } }
+      config: {
+        headers: {
+          "Content-Type": "multipart/form-data"
+        }
+      }
     })
       .then(function success(response) {
-        const userInfo = response.data.content;
-        if (response.data.responseCode === 401) {
-          self.setState({ loginFailed: true });
-          self.setState({ loginSuccess: false });
+        if (self.isFailed(response)) {
+          /* Login failed */
+          self.setLoginResult(true, false);
         } else {
-          JotFormAPI.options({
-            debug: true,
-            apiKey: "428018ef390622096e28065f850ddfd0" // "428018ef390622096e28065f850ddfd0"
-          });
-          if (undefined !== "428018ef390622096e28065f850ddfd0") {
-            console.log("App key : ");
-            console.log(userInfo.appKey);
-            getUserData();
-            self.setState({ loginSuccess: true });
-            self.setState({ loginFailed: false });
-          }
+          /* Login success */
+          self.setAPIConfiguration(response);
+          getUserData();
+          self.setLoginResult(false, true);
         }
       })
       .catch(function fail() {});
   };
-
-  /* Renders Login Form */
 
   render() {
     const styleLink = document.createElement("link");
     styleLink.rel = "stylesheet";
     styleLink.href = styleLinkHref;
     document.head.appendChild(styleLink);
+
     const { loginSuccess, loginFailed } = this.state;
 
     /* Redirects authorized user to forms page */
-
     if (loginSuccess) {
       return <Redirect to="/forms" />;
     }
 
+    /* Renders Login Form */
     return (
       <>
         <img
@@ -171,6 +209,7 @@ class LoginPage extends Component {
   }
 }
 
+/* Prop types */
 LoginPage.propTypes = {
   authorized: PropTypes.bool.isRequired,
   getUserData: PropTypes.func.isRequired

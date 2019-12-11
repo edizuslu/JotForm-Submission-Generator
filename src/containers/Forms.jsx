@@ -11,6 +11,7 @@ import AppHeader from "../components/AppHeader/AppHeader";
 const styleLinkHref =
   "https://cdn.jsdelivr.net/npm/semantic-ui/dist/semantic.min.css";
 
+/* Container of form components */
 class Forms extends Component {
   constructor(props) {
     super(props);
@@ -21,52 +22,56 @@ class Forms extends Component {
     };
   }
 
-  /* Loading animation */
-
+  /* Loading animation with placeholders, lazy loading */
   componentDidMount() {
     this.setState({ loading: true });
-
     setTimeout(() => {
       this.setState({ loading: false });
     }, 1500);
   }
 
-  /* Handles select or deselect question */
-
-  setSelectedQuestions = (selectedQuestions, formIndex) => {
+  /**
+   * Handle question select actions
+   * @param {object} newSelectedQuestions
+   * @param {number} formIndex
+   */
+  setSelectedQuestions = (newSelectedQuestions, formIndex) => {
     const { forms } = this.state;
-    const form = {
+    const newForm = {
       ...forms[formIndex]
     };
-    form.selectedQuestions = selectedQuestions;
-    forms[formIndex] = form;
+    newForm.selectedQuestions = newSelectedQuestions;
+    forms[formIndex] = newForm;
     this.setState({ forms });
   };
 
-  /* Handles submissionCount input's changing */
-
+  /**
+   * Handles submissionCount input's changing
+   * @param {number} newSubCount
+   * @param {number} formIndex
+   */
   submissionCountChange = (newSubCount, formIndex) => {
     const submissionCount = newSubCount.target.value;
     const { forms } = this.state;
-    const form = {
+    const newForm = {
       ...forms[formIndex]
     };
-    form.submissionCount = submissionCount;
-    forms[formIndex] = form;
+    newForm.submissionCount = submissionCount;
+    forms[formIndex] = newForm;
     this.setState({ forms });
   };
 
   render() {
-    const { authorized, setAuthFalse, user } = this.props;
     const styleLink = document.createElement("link");
     styleLink.rel = "stylesheet";
     styleLink.href = styleLinkHref;
     document.head.appendChild(styleLink);
+
+    const { authorized, setAuthFalse, user } = this.props;
     const { loading, forms } = this.state;
     const { jotformWidgets, setCurrentForm, selectedWidgets } = this.props;
 
     /* Redirects unauthorized user to login page */
-
     if (!authorized) {
       return <Redirect to="/" />;
     }
@@ -108,6 +113,7 @@ class Forms extends Component {
   }
 }
 
+/* Prop types */
 Forms.propTypes = {
   authorized: PropTypes.bool.isRequired,
   setCurrentForm: PropTypes.func.isRequired,

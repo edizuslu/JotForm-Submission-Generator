@@ -8,6 +8,7 @@ import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import Switch from "@material-ui/core/Switch";
 import PropTypes from "prop-types";
 
+/* Question class component */
 class Question extends Component {
   constructor(props) {
     super(props);
@@ -16,7 +17,6 @@ class Question extends Component {
 
   render() {
     const { handleToggle, checked, qid, questionText } = this.props;
-
     return (
       <ListItem>
         <ListItemIcon>
@@ -36,6 +36,7 @@ class Question extends Component {
   }
 }
 
+/* Prop types */
 Question.propTypes = {
   handleToggle: PropTypes.func.isRequired,
   checked: PropTypes.bool.isRequired,

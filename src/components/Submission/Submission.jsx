@@ -6,8 +6,7 @@ import Checkbox from "@material-ui/core/Checkbox";
 import PropTypes from "prop-types";
 import ReactJson from "react-json-view";
 
-/* Check box element style */
-
+/* Submission's check box element style */
 const SubmissionCheckBox = withStyles({
   root: {
     color: grey[400],
@@ -18,7 +17,9 @@ const SubmissionCheckBox = withStyles({
   checked: {}
 })(props => <Checkbox color="default" {...props} />);
 
+/* Submission functional component */
 export default function Submission(props) {
+  /* Prop types */
   Submission.propTypes = {
     submission: PropTypes.string.isRequired,
     selected: PropTypes.bool.isRequired,
@@ -35,6 +36,7 @@ export default function Submission(props) {
     handleEditSubmission
   } = props;
 
+  /* Renders submission component */
   return (
     <>
       <SubmissionCheckBox

@@ -7,10 +7,8 @@ import JotFormAPI from "jotform";
 import LoginPage from "./components/LoginPage/LoginPage";
 import Forms from "./containers/Forms";
 import Widgets from "./JotFormWidgets/Widgets";
-import FakeDataClass from "./FakeData/FakeData";
 import Submissions from "./containers/Submissions";
-
-const FakeData = new FakeDataClass();
+import { isInputType, getDefaultQuestionData } from "./FakeData/FakeData";
 
 class App extends Component {
   constructor(props) {
@@ -48,12 +46,12 @@ class App extends Component {
       const keys = Object.keys(formElements[widgetKeys[index]]);
       const elements = formElements[widgetKeys[index]];
       for (let i = 0; i < keys.length; i += 1) {
-        if (FakeData.isInputType(keys[i])) {
+        if (isInputType(keys[i])) {
           jotformWidgets.push({
             id: qid.toString(),
             label: elements[keys[i]],
             type: keys[i],
-            question: FakeData.getDefaultQuestions(keys[i])
+            question: getDefaultQuestionData(keys[i])
           });
           qid += 1;
         }
@@ -76,9 +74,8 @@ class App extends Component {
         const inputQuestions = [];
         for (let index = 0; index < keys.length; index += 1) {
           const question = response[keys[index]];
-          if (FakeData.isInputType(question.type)) {
+          if (isInputType(question.type)) {
             const { qid, type, text } = question;
-
             const label = text === "" ? "Unlabeled question" : text;
             inputQuestions.push({
               id: qid,
@@ -93,8 +90,6 @@ class App extends Component {
         form.submissionCount = 1;
       });
     });
-    console.log("Form questions : ");
-    console.log(forms);
   };
 
   /* Gets all properties of user forms and sets. */

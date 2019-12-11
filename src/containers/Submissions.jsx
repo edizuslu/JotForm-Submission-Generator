@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-syntax */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable no-console */
 /* eslint-disable jsx-a11y/label-has-associated-control */
@@ -10,13 +11,10 @@ import JotFormAPI from "jotform";
 import { Button, Card, Checkbox, Popup } from "semantic-ui-react";
 import { Redirect } from "react-router";
 import Submission from "../components/Submission/Submission";
-import FakeDataClass from "../FakeData/FakeData";
+import { setSubmissionID, generateAnswer } from "../FakeData/FakeData";
 import AppHeader from "../components/AppHeader/AppHeader";
 
-const FakeData = new FakeDataClass();
-
-/* Styles of footer, checkbox and card group elements */
-
+/* Styles of footer, checkbox and scard group elements */
 const footerStyle = {
   display: "flex",
   justifyContent: "flex-end",
@@ -36,6 +34,7 @@ const cardGroupStyle = {
   marginBottom: "5px"
 };
 
+/* Container of submission components */
 class Submissions extends Component {
   constructor(props) {
     super(props);
@@ -45,52 +44,100 @@ class Submissions extends Component {
     };
   }
 
-  /* Submissions are generating when component mounts */
-
+  /* Submission generating when component mounts */
   componentDidMount() {
     const self = this;
     const { form, user } = this.props;
-    const { selectedQuestions, submissionCount } = form;
-
-    const numberOfSubmission = parseInt(submissionCount, 10) || 0;
-    this.setState({
-      selectedSubmissions: new Array(numberOfSubmission).fill(false)
-    });
-
-    const submissionQuestions =
-      selectedQuestions !== undefined
-        ? selectedQuestions.filter(question => question !== false)
-        : [];
-
-    const submissionsArray = [];
-    for (let i = 1; i <= numberOfSubmission; i += 1) {
-      const submissionID = FakeData.getSubmissionID();
-      const submission = {};
-      const keys = Object.keys(submissionQuestions);
-      for (let index = 0; index < keys.length; index += 1) {
-        const questionID = keys[index];
-        const questionAttributes = submissionQuestions[questionID];
-        const { id, question, type } = questionAttributes;
-        FakeData.assign(submission, [id, "type"], type);
-        FakeData.generateAnswer(
-          submission,
-          type,
-          id,
-          question,
-          form.id,
-          user.username,
-          submissionID,
-          submissionQuestions,
-          form
-        );
-      }
-      submissionsArray.push(submission);
-    }
-    self.setState({ submissions: submissionsArray });
+    const { submissions, selectedSubmissions } = this.generateSubmissions(
+      form,
+      user
+    );
+    self.setState({ submissions });
+    self.setState({ selectedSubmissions });
   }
 
-  /* Counts number of selected submissions */
-  countSelecteds = () => {
+  /**
+   * Generate submissions
+   * @param {object} form
+   * @param {object} user
+   * @returns {object}
+   */
+  generateSubmissions = (form, user) => {
+    const { selectedQuestions, submissionCount } = form;
+    const submissionQuestions = this.getSubmissionQuestion(selectedQuestions);
+    const subCount = this.parseSubCount(submissionCount);
+    const submissions = [];
+    for (let i = 1; i <= subCount; i += 1) {
+      const submission = this.createSubmission(submissionQuestions, form, user);
+      submissions.push(submission);
+    }
+    const selectedSubmissions = this.initializeSelectedSubmissions(subCount);
+    return { submissions, selectedSubmissions };
+  };
+
+  /**
+   * Get submission questions
+   * @param {array} selectedQuestions
+   * @returns {array}
+   */
+  getSubmissionQuestion = selectedQuestions => {
+    return selectedQuestions !== undefined
+      ? selectedQuestions.filter(question => question !== false)
+      : [];
+  };
+
+  /**
+   * Parse submission count
+   * @param {string} submissionCount
+   * @returns {number}
+   */
+  parseSubCount = submissionCount => {
+    return parseInt(submissionCount, 10) || 0;
+  };
+
+  /**
+   * Create submission
+   * @param {array} submissionQuestions
+   * @param {object} form
+   * @param {object} user
+   * @returns {object}
+   */
+  createSubmission = (submissionQuestions, form, user) => {
+    const submission = {};
+    const keys = Object.keys(submissionQuestions);
+    for (const key of keys) {
+      const questions = this.getQuestions(submissionQuestions, key);
+      setSubmissionID(submission, questions);
+      generateAnswer(submission, questions, form, user);
+    }
+    return submission;
+  };
+
+  /**
+   * Get questions object
+   * @param {array} submissionQuestions
+   * @param {string} key
+   * @returns {object}
+   */
+  getQuestions = (submissionQuestions, key) => {
+    const questionID = key;
+    return submissionQuestions[questionID];
+  };
+
+  /**
+   * Initialize selected submission array as empty (by filling all elements with false)
+   * @param {string} submissionCount
+   * @returns {number}
+   */
+  initializeSelectedSubmissions = submissionCount => {
+    return new Array(submissionCount).fill(false);
+  };
+
+  /**
+   * Counts number of selected submissions
+   * @returns {number}
+   */
+  countSelectedSubmissions = () => {
     const { selectedSubmissions } = this.state;
     const numberOfSelecteds = selectedSubmissions.filter(
       question => question === true
@@ -98,11 +145,10 @@ class Submissions extends Component {
     return numberOfSelecteds.length;
   };
 
-  /* Select all operation via checkbox */
-
+  /* Select all submissions  */
   selectAll = () => {
     const { selectedSubmissions } = this.state;
-    const selectedCount = this.countSelecteds();
+    const selectedCount = this.countSelectedSubmissions();
     const numberOfSubmission = selectedSubmissions.length;
     const selectedAll = selectedCount === numberOfSubmission;
     const newSelecteds = new Array(numberOfSubmission).fill(!selectedAll);
@@ -111,24 +157,10 @@ class Submissions extends Component {
     });
   };
 
-  /* Copy to clipboard operation via copy button */
-
+  /* Copy selected submissions to clipboard */
   copyToClipboard = () => {
     const { submissions, selectedSubmissions } = this.state;
-    let copyString = "";
-    for (let index = 0; index < selectedSubmissions.length; index += 1) {
-      if (selectedSubmissions[index]) {
-        copyString += `"${index + 1}":\n${JSON.stringify(
-          submissions[index],
-          null,
-          2
-        )},\n`;
-        // copyString += index === selectedSubmissions.length - 1 ? "\n" : ",\n";
-      }
-    }
-    copyString = `${copyString.substring(0, copyString.length - 3)}\n}`;
-    console.log("Copy string :");
-    console.log(copyString);
+    const copyString = this.getCopiedSubText(selectedSubmissions, submissions);
     const el = document.createElement("textarea");
     el.value = `{${copyString}}`;
     el.setAttribute("readonly", "");
@@ -139,8 +171,36 @@ class Submissions extends Component {
     document.body.removeChild(el);
   };
 
-  /* Handles select or deselect operations of submission  */
+  /**
+   * Get copied submissions text
+   * @param {array} selectedSubmissions
+   * @param {array} submissions
+   * @returns {string}
+   */
+  getCopiedSubText = (selectedSubmissions, submissions) => {
+    let copyString = "";
+    for (let index = 0; index < selectedSubmissions.length; index += 1) {
+      if (this.isSelectedSubmission(selectedSubmissions, index)) {
+        copyString += this.formatSubmissionText(index, submissions);
+      }
+    }
+    return `${copyString.substring(0, copyString.length - 3)}\n}`;
+  };
 
+  /**
+   * Submission text format
+   * @param {number} index
+   * @param {array} submissions
+   * @returns {string}
+   */
+  formatSubmissionText = (index, submissions) => {
+    return `"${index + 1}":\n${JSON.stringify(submissions[index], null, 2)},\n`;
+  };
+
+  /**
+   * Handles submission' checkbox select or deselect actions
+   * @param {number} index
+   */
   handleChangeCheckBox = index => {
     const { selectedSubmissions } = this.state;
     const newSelecteds = [...selectedSubmissions];
@@ -150,8 +210,11 @@ class Submissions extends Component {
     });
   };
 
-  /* Handles edit submission */
-
+  /**
+   * Handles edit submission
+   * @param {object} edit
+   * @param {number} index
+   */
   handleEditSubmission = (edit, index) => {
     const { submissions } = this.state;
     const updatedSubmissions = [...submissions];
@@ -161,13 +224,14 @@ class Submissions extends Component {
     });
   };
 
-  /* Send submission operation with JotForm API */
-
+  /**
+   * Send submission using JotForm API
+   */
   sendSubmissions = () => {
     const { submissions, selectedSubmissions } = this.state;
     const { form } = this.props;
     for (let index = 0; index < selectedSubmissions.length; index += 1) {
-      if (selectedSubmissions[index]) {
+      if (this.isSelectedSubmission(selectedSubmissions, index)) {
         const fields = submissions[index];
         const submission = {};
         Object.keys(fields).forEach(function addAnswer(field) {
@@ -180,17 +244,26 @@ class Submissions extends Component {
     }
   };
 
+  /**
+   * Check submission if seleced
+   * @param {object} selectedSubmissions
+   * @param {number} index
+   */
+  isSelectedSubmission = (selectedSubmissions, index) => {
+    return selectedSubmissions[index];
+  };
+
+  /* Renders container of submission components */
   render() {
     const { submissions, selectedSubmissions } = this.state;
     const { authorized, setAuthFalse, user, form } = this.props;
-    const numberOfSelecteds = this.countSelecteds();
+    const numberOfSelecteds = this.countSelectedSubmissions();
     const selectedAll = numberOfSelecteds === selectedSubmissions.length;
     const anySelected = numberOfSelecteds > 0;
     const buttonBackground = anySelected ? "" : "transparent";
     const submissionKeys = Object.keys(submissions);
 
     /* Redirects unauthorized user to login page */
-
     if (!authorized) {
       return <Redirect to="/" />;
     }
@@ -215,7 +288,6 @@ class Submissions extends Component {
                   <Button
                     style={{
                       background: buttonBackground
-                      // backgroundColor: "#fa8900"
                     }}
                     onClick={() => this.copyToClipboard()}
                     color="orange"
@@ -234,7 +306,6 @@ class Submissions extends Component {
                     disabled={form.id === "new_submission"}
                     style={{
                       background: buttonBackground
-                      // backgroundColor: "#fa8900"
                     }}
                     onClick={() => this.sendSubmissions()}
                     color="orange"
@@ -275,6 +346,7 @@ class Submissions extends Component {
   }
 }
 
+/* Prop types */
 Submissions.propTypes = {
   form: PropTypes.object.isRequired,
   authorized: PropTypes.bool.isRequired,
