@@ -5,7 +5,7 @@
 This project is random submission generator tool of JotForm. Sometimes we need to have multiple submissions with different random data on a form when we're testing / developing a feature. Using faker library to generate data and selecting what type of random data we need (name, email, address etc) for each question the form would be a nice feature.
 
 #### Random Submission Generator Demo video
-   [![IMAGE ALT TEXT HERE](https://i9.ytimg.com/vi/DAMnlGtL_Tg/mq3.jpg?sqp=CKWCwu8F&rs=AOn4CLBXXhfZd_bll1769VA3-xeqI3PwGA)](https://youtu.be/DAMnlGtL_Tg)
+   [![IMAGE ALT TEXT HERE](http://img.youtube.com/vi/DAMnlGtL_Tg/0.jpg)](https://youtu.be/DAMnlGtL_Tg)
 
 ### Features
 - Creating random submission data for specified form
